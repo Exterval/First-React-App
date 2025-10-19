@@ -6,10 +6,6 @@ export default function Component() {
     const [name, setName] = useState('');
     const [quantity, setQuantity] = useState(0);
 
-    /*function handleSetItems(){
-        setItems(items)
-    }*/
-
     function handleSetCurrentItem(){
         const newItem = {name: name, quantity: quantity}
         setItems(i => [...i, newItem])
@@ -42,10 +38,12 @@ export default function Component() {
                 <h2>List of Things to Buy: </h2>
                 <ul>
                     {items.map((elem, ind)=>
-                    <li key={`${ind}-${elem}`}>{elem.name} {elem.quantity} 
-                    <button onClick={()=>handleIncrementQuantity(ind)}>+</button>
-                    <button onClick={()=>handleDecrementQuantity(ind)}>-</button> 
-                    <button onClick={()=>handleRemoveItem(ind)}>Remove</button></li>
+                    <li key={`${ind}-${elem}`}>
+                    <button id="removeButton" onClick={()=>handleRemoveItem(ind)}>X</button>
+                    {elem.name} Amount: {elem.quantity}
+                    <button id="addButton" onClick={()=>handleIncrementQuantity(ind)}>+</button>
+                    <button id="minusButton" onClick={()=>handleDecrementQuantity(ind)}>-</button> 
+                    </li>
                     )}
                 </ul>
             </div>
