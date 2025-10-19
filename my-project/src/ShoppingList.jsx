@@ -3,7 +3,6 @@ import { useState } from "react"
 export default function Component() {
 
     const [items, setItems] = useState([{name: "Milk", quantity: 4}, {name: "Eggs", quantity: 1}]);
-    const [currentItem, setCurrentItem] = useState({});
     const [name, setName] = useState('');
     const [quantity, setQuantity] = useState(0);
 
@@ -27,16 +26,15 @@ export default function Component() {
     function handleSetQuantity(event){
         setQuantity(event.target.value)
     }
-    //DEBUG
-    function handleIncrementQuantity(){
-        setQuantity(q => q + 1);
+
+    function handleIncrementQuantity(index){
+         setItems(items.map((item,ind)=> ind === index ? {...item, quantity: item.quantity + 1} : item))
     }
 
-    function handleDecrementQuantity(){
-        setQuantity(q => q - 1);
+    function handleDecrementQuantity(index){
+         setItems(items.map((item,ind)=> ind === index ? {...item, quantity: item.quantity - 1} : item))
     }
-    //DEBUG
-    
+
     return(
         <div className="container">
             <h1>My Shopping List</h1>
@@ -45,14 +43,14 @@ export default function Component() {
                 <ul>
                     {items.map((elem, ind)=>
                     <li key={`${ind}-${elem}`}>{elem.name} {elem.quantity} 
-                    <button onClick={handleIncrementQuantity}>+</button>
-                    <button onClick={handleDecrementQuantity}>-</button> 
+                    <button onClick={()=>handleIncrementQuantity(ind)}>+</button>
+                    <button onClick={()=>handleDecrementQuantity(ind)}>-</button> 
                     <button onClick={()=>handleRemoveItem(ind)}>Remove</button></li>
                     )}
                 </ul>
             </div>
-            <input type="text" value={name} onChange={handleSetName} placeholder="Enter product name..."/>
-            <input type="number" value={quantity} onChange={handleSetQuantity} placeholder="Enter product name..."/>
+            <input type="text" value={name} onChange={handleSetName} placeholder="Enter product name..." required/>
+            <input type="number" value={quantity} onChange={handleSetQuantity} placeholder="Enter product name..." required/>
             <button onClick={handleSetCurrentItem}>Add</button>
         </div>
     )
